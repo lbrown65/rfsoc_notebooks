@@ -150,7 +150,7 @@ class DAC_ToneGenerator():
                  centre_frequency=0):
         
         self._channel = channel
-        #To do DAC block check
+        #To do: DAC block check
         self.centre_frequency = centre_frequency
         
     @property
@@ -181,7 +181,7 @@ class ADC_ToneGenerator():
                  adc_centre_frequency=0):
         
         self._channel = channel
-        #To do ADC block check
+        #To do: ADC block check
         self.centre_frequency = adc_centre_frequency
         
     @property
@@ -191,8 +191,6 @@ class ADC_ToneGenerator():
     @adc_centre_frequency.setter
     def adc_centre_frequency(self, adc_centre_frequency):
         block = self._channel.adc_block
-        #if (adc_centre_frequency == 0):
-            #adc_centre_frequency = 1
         if (adc_centre_frequency < -block.BlockStatus['SamplingFreq']*1e3) \
             or (adc_centre_frequency > block.BlockStatus['SamplingFreq']*1e3):
             raise ValueError ('ADC Centre frequency out of range')
@@ -336,11 +334,12 @@ class CoarseMixerApplication():
                      ('fs/4', xrfdc.COARSE_MIX_SAMPLE_FREQ_BY_FOUR), 
                      ('-fs/4', xrfdc.COARSE_MIX_MIN_SAMPLE_FREQ_BY_FOUR)],
             value=xrfdc.COARSE_MIX_SAMPLE_FREQ_BY_FOUR,
-            description='Mix Freq:',
+            description='Receiver Frequency:',
             disabled=False,
             continuous_update=False,
+            orientation='horizontal',
             readout=True,
-            )
+            style = {'description_width': 'initial'})
 
         self.desired_freq_slider.observe(set_desired_freq, 'value')
         self.desired_coarse_mix_freq_dropdown.observe(set_CoarseMixFreq, 'value')
